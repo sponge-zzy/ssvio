@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="示例电影封面">
+  <rect width="640" height="360" fill="#1f2937"/>
+  <rect x="36" y="36" width="572" height="292" fill="#991b1b"/>
+  <text x="64" y="178" fill="#ffffff" font-size="48" font-family="Arial, sans-serif">示例电影</text>
+  <text x="64" y="232" fill="#fecaca" font-size="26" font-family="Arial, sans-serif">Movie Mock Data</text>
+</svg>

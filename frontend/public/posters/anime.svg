@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="示例动漫封面">
+  <rect width="640" height="360" fill="#18181b"/>
+  <rect x="36" y="36" width="572" height="292" fill="#047857"/>
+  <text x="64" y="178" fill="#ffffff" font-size="48" font-family="Arial, sans-serif">示例动漫</text>
+  <text x="64" y="232" fill="#bbf7d0" font-size="26" font-family="Arial, sans-serif">Anime Mock Data</text>
+</svg>
