@@ -7,6 +7,10 @@ type RouteName =
   | 'videoDetail'
   | 'watch'
   | 'profile'
+  | 'adminHome'
+  | 'adminVideos'
+  | 'adminVideoNew'
+  | 'adminVideoEdit'
   | 'notFound'
 
 type AppRoute = {
@@ -14,6 +18,7 @@ type AppRoute = {
   params: {
     category?: VideoCategory
     id?: string
+    episodeId?: string
   }
 }
 
@@ -35,6 +40,24 @@ export function parseHashRoute(hash: string): AppRoute {
     return { name: 'profile', params: {} }
   }
 
+  if (parts[0] === 'admin') {
+    if (parts.length === 1) {
+      return { name: 'adminHome', params: {} }
+    }
+
+    if (parts[1] === 'videos' && parts.length === 2) {
+      return { name: 'adminVideos', params: {} }
+    }
+
+    if (parts[1] === 'videos' && parts[2] === 'new') {
+      return { name: 'adminVideoNew', params: {} }
+    }
+
+    if (parts[1] === 'videos' && parts[2] && parts[3] === 'edit') {
+      return { name: 'adminVideoEdit', params: { id: parts[2] } }
+    }
+  }
+
   if (parts[0] === 'categories') {
     return { name: 'category', params: {} }
   }
@@ -48,7 +71,7 @@ export function parseHashRoute(hash: string): AppRoute {
   }
 
   if ((parts[0] === 'play' || parts[0] === 'watch') && parts[1]) {
-    return { name: 'watch', params: { id: parts[1] } }
+    return { name: 'watch', params: { id: parts[1], episodeId: parts[2] } }
   }
 
   return { name: 'notFound', params: {} }

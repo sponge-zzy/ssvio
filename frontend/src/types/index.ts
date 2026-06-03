@@ -5,5 +5,13 @@ export type {
   RatingItem,
   WatchHistoryItem,
 } from './interactions'
-export type { Category, Video, VideoCategory } from './video'
+export type {
+  Category,
+  ContentType,
+  Episode,
+  InitialVideo,
+  Video,
+  VideoCategory,
+  VideoStatus,
+} from './video'
 export type { User, UserRole } from './user'

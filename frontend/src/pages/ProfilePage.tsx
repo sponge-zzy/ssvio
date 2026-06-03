@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { FavoriteItem, WatchHistoryItem } from '../types/interactions'
 import { getCategoryName } from '../utils/category'
 import { getFavorites } from '../utils/favorites'
+import { getPublishedVideos } from '../utils/videoStorage'
 import { getWatchHistory } from '../utils/watchHistory'
 
 export function ProfilePage() {
@@ -9,8 +10,12 @@ export function ProfilePage() {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([])
 
   useEffect(() => {
-    setWatchHistory(getWatchHistory())
-    setFavorites(getFavorites())
+    const publishedVideoIds = new Set(getPublishedVideos().map((video) => video.id))
+
+    setWatchHistory(
+      getWatchHistory().filter((item) => publishedVideoIds.has(item.id)),
+    )
+    setFavorites(getFavorites().filter((item) => publishedVideoIds.has(item.id)))
   }, [])
 
   return (

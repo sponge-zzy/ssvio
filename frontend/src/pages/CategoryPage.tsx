@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { VideoCard } from '../components/VideoCard'
-import { mockCategories, mockVideos } from '../mocks/videos'
-import type { VideoCategory } from '../types/video'
+import { mockCategories } from '../mocks/videos'
+import type { Video, VideoCategory } from '../types/video'
 
 type CategoryPageProps = {
+  videos: Video[]
   initialCategory?: VideoCategory
 }
 
 type FilterValue = 'all'
 
-export function CategoryPage({ initialCategory }: CategoryPageProps) {
+export function CategoryPage({ videos, initialCategory }: CategoryPageProps) {
   const [selectedCategory, setSelectedCategory] = useState<
     VideoCategory | FilterValue
   >(initialCategory ?? 'all')
@@ -20,10 +21,10 @@ export function CategoryPage({ initialCategory }: CategoryPageProps) {
     setSelectedCategory(initialCategory ?? 'all')
   }, [initialCategory])
 
-  const regions = Array.from(new Set(mockVideos.map((video) => video.region)))
-  const years = Array.from(new Set(mockVideos.map((video) => video.year)))
+  const regions = Array.from(new Set(videos.map((video) => video.region)))
+  const years = Array.from(new Set(videos.map((video) => video.year)))
 
-  const filteredVideos = mockVideos.filter((video) => {
+  const filteredVideos = videos.filter((video) => {
     const isCategoryMatched =
       selectedCategory === 'all' || video.category === selectedCategory
     const isRegionMatched =
@@ -37,7 +38,7 @@ export function CategoryPage({ initialCategory }: CategoryPageProps) {
   return (
     <section>
       <h1>分类页</h1>
-      <p>根据分类、地区、年份筛选 mock 视频数据。</p>
+      <p>根据分类、地区、年份筛选本地影片数据。</p>
 
       <div className="filter-panel">
         <label>

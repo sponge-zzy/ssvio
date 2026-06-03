@@ -7,9 +7,10 @@ import { saveWatchHistory } from '../utils/watchHistory'
 type WatchPageProps = {
   video?: Video
   videoId?: string
+  episodeId?: string
 }
 
-export function WatchPage({ video, videoId }: WatchPageProps) {
+export function WatchPage({ video, videoId, episodeId }: WatchPageProps) {
   const videoElementRef = useRef<HTMLVideoElement>(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [danmakuContent, setDanmakuContent] = useState('')
@@ -24,7 +25,7 @@ export function WatchPage({ video, videoId }: WatchPageProps) {
       setDanmakuContent('')
       setDanmakuError('')
     }
-  }, [video])
+  }, [video, episodeId])
 
   if (!video) {
     return (
@@ -36,6 +37,20 @@ export function WatchPage({ video, videoId }: WatchPageProps) {
   }
 
   const currentVideo = video
+  const currentEpisode = episodeId
+    ? currentVideo.episodes.find((episode) => episode.id === episodeId)
+    : currentVideo.episodes[0]
+
+  if (!currentEpisode) {
+    return (
+      <section>
+        <h1>分集不存在</h1>
+        <p>当前影片没有找到指定分集。</p>
+        <a href={`#/videos/${currentVideo.id}`}>返回详情页</a>
+      </section>
+    )
+  }
+
   const activeDanmakuItems = danmakuItems.filter(
     (item) => Math.abs(currentTime - item.time) <= 1,
   )
@@ -61,10 +76,11 @@ export function WatchPage({ video, videoId }: WatchPageProps) {
   return (
     <section>
       <h1>{currentVideo.title}</h1>
+      <h2>{currentEpisode.title}</h2>
       <div className="player-wrapper">
         <video
           ref={videoElementRef}
-          src={currentVideo.playUrl}
+          src={currentEpisode.playUrl}
           poster={currentVideo.bannerUrl ?? currentVideo.coverUrl}
           controls
           className="video-player"

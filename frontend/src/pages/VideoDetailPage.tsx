@@ -39,6 +39,8 @@ export function VideoDetailPage({ video, videoId }: VideoDetailPageProps) {
 
   const currentVideo = video
   const categoryName = getCategoryName(currentVideo.category)
+  const firstEpisode = currentVideo.episodes[0]
+  const shouldShowEpisodeList = currentVideo.contentType !== 'movie'
 
   function handleFavoriteClick() {
     if (isCurrentVideoFavorite) {
@@ -106,13 +108,40 @@ export function VideoDetailPage({ video, videoId }: VideoDetailPageProps) {
           </div>
         </dl>
         <div className="detail-actions">
-          <a href={`#/play/${currentVideo.id}`} className="primary-link">
-            立即播放
-          </a>
+          {firstEpisode && (
+            <a
+              href={`#/play/${currentVideo.id}/${firstEpisode.id}`}
+              className="primary-link"
+            >
+              立即播放
+            </a>
+          )}
           <button type="button" onClick={handleFavoriteClick}>
             {isCurrentVideoFavorite ? '取消收藏' : '收藏'}
           </button>
         </div>
+        {shouldShowEpisodeList && (
+          <div className="episode-panel">
+            <h2>分集</h2>
+            {currentVideo.episodes.length > 0 ? (
+              <div className="episode-list">
+                {currentVideo.episodes.map((episode) => (
+                  <a
+                    key={episode.id}
+                    href={`#/play/${currentVideo.id}/${episode.id}`}
+                    className="episode-link"
+                  >
+                    <span>第 {episode.episodeNumber} 集</span>
+                    <strong>{episode.title}</strong>
+                    {episode.duration && <small>{episode.duration}</small>}
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p>暂无分集。</p>
+            )}
+          </div>
+        )}
         <div className="rating-panel">
           <h2>我的评分</h2>
           <p>{currentScore ? `已评分：${currentScore} 分` : '请选择评分'}</p>

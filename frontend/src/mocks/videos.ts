@@ -1,4 +1,4 @@
-import type { Category, Video } from '../types/video'
+import type { Category, InitialVideo } from '../types/video'
 
 export const mockCategories: Category[] = [
   { id: 'movie', name: '电影' },
@@ -6,7 +6,7 @@ export const mockCategories: Category[] = [
   { id: 'anime', name: '动漫' },
 ]
 
-export const mockVideos: Video[] = [
+export const mockVideos: InitialVideo[] = [
   {
     id: 'video-001',
     title: '示例电影',

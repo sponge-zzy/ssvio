@@ -17,7 +17,7 @@ export function SearchPage({ videos }: SearchPageProps) {
   return (
     <section>
       <h1>搜索页</h1>
-      <p>输入关键词后，会在 mock 视频数据中搜索影片。</p>
+      <p>输入关键词后，会在已上架的本地影片数据中搜索影片。</p>
       <form className="search-placeholder" onSubmit={(event) => event.preventDefault()}>
         <input
           type="search"
@@ -47,6 +47,7 @@ function isVideoMatched(video: Video, searchText: string) {
     video.title,
     video.description,
     getCategoryName(video.category),
+    getContentTypeName(video.contentType),
     video.category,
     video.region,
     String(video.year),
@@ -56,4 +57,10 @@ function isVideoMatched(video: Video, searchText: string) {
     .toLowerCase()
 
   return searchableText.includes(searchText)
+}
+
+function getContentTypeName(contentType: Video['contentType']) {
+  if (contentType === 'series') return '电视剧'
+  if (contentType === 'anime') return '动漫'
+  return '电影'
 }

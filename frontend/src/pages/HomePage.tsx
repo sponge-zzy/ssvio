@@ -9,7 +9,7 @@ export function HomePage({ videos }: HomePageProps) {
   return (
     <section>
       <h1>首页</h1>
-      <p>这里展示来自 mock 数据的视频列表。</p>
+      <p>这里展示已上架的本地影片列表。</p>
       <div className="placeholder-grid">
         {videos.map((video) => (
           <VideoCard key={video.id} video={video} />
